@@ -1,6 +1,6 @@
 # 梅花易数卦象辅助分析
 
-在线使用 / URL : https://hsiaofeng.com/tools/meihua/
+在线使用 / URL : https://hsiao-feng.github.io/MeiHuaYiShu-Analysis/
 
 "Meihuayishu" is a prediction method invented by the ancient Chinese. This tool is used for its auxiliary analysis.
 
