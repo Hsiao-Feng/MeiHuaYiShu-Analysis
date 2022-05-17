@@ -1,5 +1,7 @@
 # 梅花易数卦象辅助分析
 
+在线使用 / URL : https://hsiaofeng.com/tools/meihua/
+
 "Meihuayishu" is a prediction method invented by the ancient Chinese. This tool is used for its auxiliary analysis.
 
 > 用生体及比和则吉，体生用及克体则不吉。
