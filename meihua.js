@@ -113,6 +113,16 @@ function show(){
     互卦生克显示.innerHTML = 互卦生克;
     变卦生克显示.innerHTML = 变卦生克;
 
+    卦象参考显示(主卦上卦);
+    卦象参考显示(主卦下卦);
+    卦象参考显示(互卦上卦);
+    卦象参考显示(互卦下卦);
+    卦象参考显示(变卦上卦);
+    卦象参考显示(变卦下卦);
 
 
+}
+
+function 卦象参考显示(卦){
+    document.querySelector(`#g${卦}`).removeAttribute("hidden");
 }
