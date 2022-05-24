@@ -77,7 +77,7 @@ function show(){
 
 
     if(变卦[动爻] == '0') 变卦数组.splice(动爻, 1, '1');
-    else 变卦[动爻] = 变卦数组.splice(动爻, 1, '0');;
+    else 变卦数组.splice(动爻, 1, '0');
 
     变卦 = 变卦数组.join('');
     变卦上卦 = 变卦.substr(0, 3);
@@ -112,6 +112,12 @@ function show(){
     主卦生克显示.innerHTML = 主卦生克;
     互卦生克显示.innerHTML = 互卦生克;
     变卦生克显示.innerHTML = 变卦生克;
+
+    //将 .explain 内的子元素全部隐藏
+    let explain = document.querySelector(".explain");
+    for(let i = 0; i < explain.children.length; i++){
+        explain.children[i].setAttribute("hidden", "hidden");
+    }
 
     卦象参考显示(主卦上卦);
     卦象参考显示(主卦下卦);
