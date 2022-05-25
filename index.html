@@ -42,6 +42,23 @@
         .accordion-item{
             margin: auto 20px;
         }
+        .type {
+            font-size: 1.5em;
+            line-height: 2em;
+        }
+        table {
+            margin: 2em auto;
+            text-align: center;
+        }
+        table td {
+            padding: 0.5em;
+        }
+        .red {
+            color: #b70e0e;
+        }
+        .green {
+            color: #0e8b0e;
+        }
     </style>
 </head>
 
@@ -101,7 +118,7 @@
     </div>
     <br>
     <div class="container" id="result" hidden>
-        <div class="block">
+        <!-- <div class="block">
             <p>主</p>
             <div id="main_hex"></div>
         </div>
@@ -112,9 +129,35 @@
         <div class="block">
             <p>变</p>
             <div id="changed_hex"></div>
-        </div>
+        </div> -->
+        <table>
+            <tr>
+                <th></th>
+                <th>主卦</th>
+                <th>互卦</th>
+                <th>变卦</th>
+            </tr>
+            <tr class="up">
+                <td id="type"></td>
+                <td id="main_hex"></td>
+                <td id="mutual_hex"></td>
+                <td id="changed_hex"></td>
+            </tr>
+            <tr class="down">
+                <td id="type"></td>
+                <td id="main_hex"></td>
+                <td id="mutual_hex"></td>
+                <td id="changed_hex"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="main_live"></td>
+                <td id="mutual_live"></td>
+                <td id="changed_live"></td>
+            </tr>
+        </table>
     </div>
-    <div class="container">
+    <!-- <div class="container">
         <div class="block">
             <p id="main_live"></p>
         </div>
@@ -124,7 +167,7 @@
         <div class="block">
             <p id="changed_live"></p>
         </div>
-    </div>
+    </div> -->
     <div class="accordion block explain" id="accordionExample">
         <div class="accordion-item" id="g111" hidden>
             <h2 class="accordion-header" id="headingOne">

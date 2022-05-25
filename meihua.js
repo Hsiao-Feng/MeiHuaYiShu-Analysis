@@ -31,18 +31,24 @@ function 生克(一, 二){
         "水": "火",
         "火": "金"
     };
-    // if(生[一] == 二) return 1; //一生二
-    // else if(克[一] == 二) return 2; //一克二
-    // else if(生[二] == 一) return 3; //二生一
-    // else if(克[二] == 一) return 4; //二克一
-    // else if(一 == 二) return 5; //同位
-    // else return 0;
-    if(生[一] == 二) return "上生下";
-    else if(克[一] == 二) return "上克下";
-    else if(生[二] == 一) return "下生上";
-    else if(克[二] == 一) return "下克上";
-    else if(一 == 二) return "同位";
+    let 结果 = "";
+    if(生[一] == 二)      结果 = "上生下";
+    else if(克[一] == 二) 结果 = "上克下";
+    else if(生[二] == 一) 结果 = "下生上";
+    else if(克[二] == 一) 结果 = "下克上";
+    else if(一 == 二)     结果 = "同位";
     else return 0;
+
+    return 结果;
+
+}
+
+function 吉凶(结果){
+    if (结果 == "用生体") return '<span class="green">用生体</span>';
+    else if (结果 == "用克体") return '<span class="red">用克体</span>';
+    else if (结果 == "互生体") return '<span class="green">互生体</span>';
+    else if (结果 == "互克体") return '<span class="red">互克体</span>';
+    else return 结果;
 }
 
 function show(){
@@ -61,6 +67,9 @@ function show(){
     let 主卦上卦 = document.querySelector('#main_up').value;
     let 主卦下卦 = document.querySelector('#main_down').value;
     let 动爻 = parseInt(document.querySelector('#change').value);
+
+    let 体卦位置 = 动爻 < 3 ? "下" : "上";
+    let 用卦位置 = 动爻 < 3 ? "上" : "下";
 
     let 主卦 = 主卦上卦 + 主卦下卦;
     let 互卦上卦 = 主卦[1] + 主卦[2] + 主卦[3];
@@ -93,21 +102,40 @@ function show(){
         "100": "☶",
         "000": "☷"
     };
-    let 主 = document.querySelector("#main_hex");
-    let 互 = document.querySelector("#mutual_hex");
-    let 变 = document.querySelector("#changed_hex");
 
-    let 主卦生克显示 = document.querySelector("#main_live");
-    let 互卦生克显示 = document.querySelector("#mutual_live");
-    let 变卦生克显示 = document.querySelector("#changed_live");
+    const 上卦象 = document.querySelector('tr.up');
+    const 下卦象 = document.querySelector('tr.down');
+
+    上卦象.querySelector("#main_hex").innerHTML = '<span class="hex">' + 八卦[主卦上卦] + '&nbsp;<small>' + 五行[主卦上卦] + '</small></span>';
+    上卦象.querySelector("#mutual_hex").innerHTML = '<span class="hex">' + 八卦[互卦上卦] + '&nbsp;<small>' + 五行[互卦上卦] + '</small></span>';
+    上卦象.querySelector("#changed_hex").innerHTML = '<span class="hex">' + 八卦[变卦上卦] + '&nbsp;<small>' + 五行[变卦上卦] + '</small></span>';
+
+    下卦象.querySelector("#main_hex").innerHTML = '<span class="hex">' + 八卦[主卦下卦] + '&nbsp;<small>' + 五行[主卦下卦] + '</small></span>';
+    下卦象.querySelector("#mutual_hex").innerHTML = '<span class="hex">' + 八卦[互卦下卦] + '&nbsp;<small>' + 五行[互卦下卦] + '</small></span>';
+    下卦象.querySelector("#changed_hex").innerHTML = '<span class="hex">' + 八卦[变卦下卦] + '&nbsp;<small>' + 五行[变卦下卦] + '</small></span>';
+
+    const 主卦生克显示 = document.querySelector("#main_live");
+    const 互卦生克显示 = document.querySelector("#mutual_live");
+    const 变卦生克显示 = document.querySelector("#changed_live");
     
-    let 主卦生克 = 生克(五行[主卦上卦], 五行[主卦下卦]);
-    let 互卦生克 = 生克(五行[互卦上卦], 五行[互卦下卦]);
-    let 变卦生克 = 生克(五行[变卦上卦], 五行[变卦下卦]);
+    let 主卦生克 = 吉凶(生克(五行[主卦上卦], 五行[主卦下卦]).replace(体卦位置, "体").replace(用卦位置, "用"));
+    let 互卦生克 = "";
+    let 变卦生克 = 吉凶(生克(五行[变卦上卦], 五行[变卦下卦]).replace(体卦位置, "体").replace(用卦位置, "用")).replace("用", "变");
 
-    主.innerHTML = '<span class="hex">' + 八卦[主卦上卦] + '&nbsp;<small>' + 五行[主卦上卦] + '</small></span><br><span class="hex">' + 八卦[主卦下卦] + '&nbsp;<small>' + 五行[主卦下卦] + '</small></span>';
-    互.innerHTML = '<span class="hex">' + 八卦[互卦上卦] + '&nbsp;<small>' + 五行[互卦上卦] + '</small></span><br><span class="hex">' + 八卦[互卦下卦] + '&nbsp;<small>' + 五行[互卦下卦] + '</small></span>';
-    变.innerHTML = '<span class="hex">' + 八卦[变卦上卦] + '&nbsp;<small>' + 五行[变卦上卦] + '</small></span><br><span class="hex">' + 八卦[变卦下卦] + '&nbsp;<small>' + 五行[变卦下卦] + '</small></span>';
+    if(体卦位置 == "下"){
+        上卦象.querySelector("#type").innerHTML = '用';
+        下卦象.querySelector("#type").innerHTML = '体';
+        if(生克(五行[主卦下卦], 五行[互卦上卦]).replace("上", "体").replace("下", "互") == "互克体") {
+            互卦生克 = "互克体";
+        }
+        互卦生克 = 吉凶(生克(五行[主卦下卦], 五行[互卦上卦]).replace("上", "体").replace("下", "互")) + '<br>' + 吉凶(生克(五行[主卦下卦], 五行[互卦下卦]).replace("上", "体").replace("下", "互"));
+
+    } else {
+        上卦象.querySelector("#type").innerHTML = '体';
+        下卦象.querySelector("#type").innerHTML = '用';
+        互卦生克 = 吉凶(生克(五行[主卦上卦], 五行[互卦上卦]).replace("上", "体").replace("下", "互")) + '<br>' + 吉凶(生克(五行[主卦上卦], 五行[互卦下卦]).replace("上", "体").replace("下", "互"));
+    }
+
 
     主卦生克显示.innerHTML = 主卦生克;
     互卦生克显示.innerHTML = 互卦生克;
