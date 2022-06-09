@@ -59,6 +59,14 @@
         .green {
             color: #0e8b0e;
         }
+        .center {
+            text-align: center;
+            display: block;
+            margin: auto;
+        }
+        u {
+            font-family: Input, Consolas, 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 
@@ -168,7 +176,14 @@
             <p id="changed_live"></p>
         </div>
     </div> -->
-    <div class="accordion block explain" id="accordionExample">
+    <div class="center">
+        <button type="button" class="btn btn-outline-dark" id="share" onclick="share();" hidden>🔗分享本卦</button>
+    </div>
+    <br>
+    
+    
+    <div class="accordion block explain" id="accordionExample" hidden>
+        <p class="center mb-3"><strong>八卦万物类占</strong></p>
         <div class="accordion-item" id="g111" hidden>
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 

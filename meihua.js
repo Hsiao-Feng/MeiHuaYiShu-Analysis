@@ -12,6 +12,12 @@
 */
 
 
+//获取get参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substring(1).match(reg);
+    if (r != null) return decodeURI(r[2]); return null;
+}
 
 
 
@@ -51,8 +57,45 @@ function 吉凶(结果){
     else return 结果;
 }
 
+function main(){
+    let 主卦上卦 = getUrlParam("t") || null;
+    let 主卦下卦 = getUrlParam("b") || null;
+    let 动爻 = getUrlParam("c") || null;
+    console.log(主卦上卦, 主卦下卦, 动爻);
+
+    if(!(主卦上卦 && 主卦下卦 || 动爻)){
+        return 0;
+    }
+
+    动爻 = parseInt(动爻);
+
+    /*
+    如果直接在声明变量时候转换，当 c = 0 时会导致 c = null，因为：
+    >> "0" || null
+    <  "0"
+    >> 0 || null
+    <  null 
+    */
+
+    document.querySelector('#main_up').value = 主卦上卦;
+    document.querySelector('#main_down').value = 主卦下卦;
+    document.querySelector('#change').value = 动爻;
+    show();
+}
+
 function show(){
-    document.querySelector("#result").removeAttribute("hidden");    
+    document.querySelector("#result").removeAttribute("hidden");
+
+    document.querySelector("#share").removeAttribute("hidden"); //显示分享按钮
+
+    //重置分享按钮
+    document.querySelector("#share").classList.remove("btn-outline-success");  
+    document.querySelector("#share").classList.add("btn-outline-dark");
+    document.querySelector("#share").innerHTML = "🔗分享本页";
+
+    //移除链接显示
+    const urlDisplay = document.querySelector(".urlDisplay");
+    if(urlDisplay) urlDisplay.remove();
     
     let 五行 = {
         "111": "金",
@@ -67,6 +110,8 @@ function show(){
     let 主卦上卦 = document.querySelector('#main_up').value;
     let 主卦下卦 = document.querySelector('#main_down').value;
     let 动爻 = parseInt(document.querySelector('#change').value);
+
+    window.history.replaceState(null, null, `?t=${主卦上卦}&b=${主卦下卦}&c=${动爻}`);
 
     let 体卦位置 = 动爻 < 3 ? "下" : "上";
     let 用卦位置 = 动爻 < 3 ? "上" : "下";
@@ -141,9 +186,10 @@ function show(){
     互卦生克显示.innerHTML = 互卦生克;
     变卦生克显示.innerHTML = 变卦生克;
 
-    //将 .explain 内的子元素全部隐藏
+    //将 .explain 内的子元素全部隐藏，从 1 开始是因为 0 是标题“八卦万物类占”，不需要隐藏。
     let explain = document.querySelector(".explain");
-    for(let i = 0; i < explain.children.length; i++){
+    explain.removeAttribute("hidden");
+    for(let i = 1; i < explain.children.length; i++){
         explain.children[i].setAttribute("hidden", "hidden");
     }
 
@@ -160,3 +206,27 @@ function show(){
 function 卦象参考显示(卦){
     document.querySelector(`#g${卦}`).removeAttribute("hidden");
 }
+
+function share(){
+    const url = window.location.href;
+    const input = document.createElement('input');
+    const button = document.querySelector("#share");
+    input.value = url;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+    // btn-outline-success
+    button.classList.remove("btn-outline-dark");
+    button.classList.add("btn-outline-success");
+    button.innerHTML = "✔已复制";
+    // 新建元素显示链接
+    if(!document.querySelector(".urlDisplay")){
+        const urlDisplay = document.createElement('p');
+        urlDisplay.className = "urlDisplay p-3 mx-3 bg-success text-light mt-4";
+        urlDisplay.innerHTML = `如复制失败，可手动复制本卦链接：<br><u>${url}</u>`;
+        document.querySelector("#share").parentElement.appendChild(urlDisplay);
+    }
+}
+
+main();
