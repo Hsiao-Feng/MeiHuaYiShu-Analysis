@@ -223,7 +223,7 @@ function share(){
     // 新建元素显示链接
     if(!document.querySelector(".urlDisplay")){
         const urlDisplay = document.createElement('p');
-        urlDisplay.className = "urlDisplay p-3 bg-success text-light center mt-4";
+        urlDisplay.className = "urlDisplay p-3 text-light center mt-4";
         urlDisplay.innerHTML = `如复制失败，可手动复制本卦链接：<br><u>${url}</u>`;
         document.querySelector("#share").parentElement.appendChild(urlDisplay);
     }
