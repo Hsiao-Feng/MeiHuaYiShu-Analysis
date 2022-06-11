@@ -42,7 +42,7 @@ function 生克(一, 二){
     else if(克[一] == 二) 结果 = "上克下";
     else if(生[二] == 一) 结果 = "下生上";
     else if(克[二] == 一) 结果 = "下克上";
-    else if(一 == 二)     结果 = "同位";
+    else if(一 == 二)     结果 = "比和";
     else return 0;
 
     return 结果;
@@ -54,6 +54,8 @@ function 吉凶(结果){
     else if (结果 == "用克体") return '<span class="red">用克体</span>';
     else if (结果 == "互生体") return '<span class="green">互生体</span>';
     else if (结果 == "互克体") return '<span class="red">互克体</span>';
+    else if (结果 == "体生用") return '<span class="red">体生用</span>';
+    else if (结果 == "体生互") return '<span class="red">体生互</span>';
     else return 结果;
 }
 
